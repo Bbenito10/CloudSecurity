@@ -1,0 +1,28 @@
+pipeline {
+  agent any
+
+  stages {
+    stage('Checkout') {
+      steps {
+        git 'https://github.com/your-repo/sample-app.git'
+      }
+    }
+    stage('Build') {
+      steps {
+        sh 'npm install'
+        sh 'npm run build'
+      }
+    }
+    stage('Deploy') {
+      steps {
+        sh 'terraform init'
+        sh 'terraform apply -auto-approve'
+      }
+    }
+    stage('Security Scan') {
+      steps {
+        sh 'npx audit-ci --low'
+      }
+    }
+  }
+}

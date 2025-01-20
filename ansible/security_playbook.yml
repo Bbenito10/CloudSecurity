@@ -1,0 +1,16 @@
+---
+- name: Secure EC2 Instances
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Ensure all packages are up to date
+      apt:
+        update_cache: yes
+        upgrade: dist
+
+    - name: Configure Firewall
+      ufw:
+        state: enabled
+        rule: allow
+        port: '22'
